@@ -188,10 +188,6 @@ module.exports = JhipsterGenerator.extend({
     },
 
     install() {
-        if (this.config.testmode !== null) {
-            return;
-        }
-
         let logMsg =
             `To install your dependencies manually, run: ${chalk.yellow.bold(`${this.clientPackageManager} install`)}`;
 
