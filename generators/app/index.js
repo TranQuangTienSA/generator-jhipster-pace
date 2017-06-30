@@ -9,6 +9,8 @@ const jhipsterConstants = require('generator-jhipster/generators/generator-const
 const JhipsterGenerator = generator.extend({});
 util.inherits(JhipsterGenerator, BaseGenerator);
 
+const DEFAULT_PACE_THEME = 'green';
+
 module.exports = JhipsterGenerator.extend({
     initializing: {
         readConfig() {
@@ -23,7 +25,7 @@ module.exports = JhipsterGenerator.extend({
             this.printJHipsterLogo();
 
             // Have Yeoman greet the user.
-            this.log(`Welcome to the ${chalk.bold.yellow('JHipster pace')} generator! ${chalk.yellow(`v${packagejs.version}\n`)}`);
+            this.log(`Welcome to the ${chalk.bold.yellow('JHipster Pace')} generator! ${chalk.yellow(`v${packagejs.version}\n`)}`);
         },
         checkJhipster() {
             const jhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
@@ -38,10 +40,52 @@ module.exports = JhipsterGenerator.extend({
         const done = this.async();
         const prompts = [
             {
-                type: 'input',
-                name: 'message',
-                message: 'Please put something',
-                default: 'hello world!'
+                type: 'list',
+                name: 'theme',
+                choices: [
+                    {
+                        value: DEFAULT_PACE_THEME,
+                        name: DEFAULT_PACE_THEME
+                    },
+                    {
+                        value: 'black',
+                        name: 'black'
+                    },
+                    {
+                        value: 'blue',
+                        name: 'blue'
+                    },
+                    {
+                        value: 'orange',
+                        name: 'orange'
+                    },
+                    {
+                        value: 'pink',
+                        name: 'pink'
+                    },
+                    {
+                        value: 'purple',
+                        name: 'purple'
+                    },
+                    {
+                        value: 'red',
+                        name: 'red'
+                    },
+                    {
+                        value: 'silver',
+                        name: 'silver'
+                    },
+                    {
+                        value: 'white',
+                        name: 'white'
+                    },
+                    {
+                        value: 'yellow',
+                        name: 'yellow'
+                    }
+                ],
+                message: 'Please select a theme.',
+                default: DEFAULT_PACE_THEME
             }
         ];
 
@@ -80,40 +124,67 @@ module.exports = JhipsterGenerator.extend({
         const webappDir = jhipsterConstants.CLIENT_MAIN_SRC_DIR;
 
         // variable from questions
-        this.message = this.props.message;
+        this.theme = this.props.theme;
 
-        // show all variables
-        this.log('\n--- some config read from config ---');
-        this.log(`baseName=${this.baseName}`);
-        this.log(`packageName=${this.packageName}`);
-        this.log(`clientFramework=${this.clientFramework}`);
-        this.log(`clientPackageManager=${this.clientPackageManager}`);
-        this.log(`buildTool=${this.buildTool}`);
+        this.addNpmDependency('pace-progress', '1.0.2');
 
-        this.log('\n--- some function ---');
-        this.log(`angularAppName=${this.angularAppName}`);
+        const webpackCopyContent = ',\n                { from: \'./node_modules/pace-progress\', to: \'content/pace-progress\' }';
+        this.replaceContent('webpack/webpack.common.js', webpackCopyContent, '', false);
+        this.replaceContent('webpack/webpack.common.js', 'to: \'robots.txt\' }', `to: \'robots.txt\' }${webpackCopyContent}`, false);
 
-        this.log('\n--- some const ---');
-        this.log(`javaDir=${javaDir}`);
-        this.log(`resourceDir=${resourceDir}`);
-        this.log(`webappDir=${webappDir}`);
-
-        this.log('\n--- variables from questions ---');
-        this.log(`\nmessage=${this.message}`);
-        this.log('------\n');
-
-        if (this.clientFramework === 'angular1') {
-            this.template('dummy.txt', 'dummy-angular1.txt');
-        }
-        if (this.clientFramework === 'angular2') {
-            this.template('dummy.txt', 'dummy-angular2.txt');
-        }
-        if (this.buildTool === 'maven') {
-            this.template('dummy.txt', 'dummy-maven.txt');
-        }
-        if (this.buildTool === 'gradle') {
-            this.template('dummy.txt', 'dummy-gradle.txt');
-        }
+        const indexLoadingContent = '<div class="loading"></div>';
+        this.replaceContent(`${webappDir}index.html`, '<jhi-main>.*</jhi-main>', `<jhi-main>${indexLoadingContent}</jhi-main>`, true);
+        const indexHeaderContent = '    <!-- begin-pace-progress -->\n'
+        + `    <link rel="stylesheet" href="/content/pace-progress/themes/${this.theme}/pace-theme-flash.css"/>\n`
+        + '    <style type="text/css">\n'
+        + '        .pace .pace-activity {top: 70px;} .pace .pace-progress-inner {box-shadow: none;}\n'
+        + '        .loading::before,\n'
+        + '        .loading::after {\n'
+        + '            position: fixed;\n'
+        + '            z-index: 3000;\n'
+        + '            top: 0;\n'
+        + '            left: 0;\n'
+        + '            display: flex;\n'
+        + '            justify-content: center;\n'
+        + '            align-items: center;\n'
+        + '            width: 100%;\n'
+        + '            height: 100%;\n'
+        + '        }\n'
+        + '        .loading::before {\n'
+        + '            content: \'\';\n'
+        + '            background-color: #fff;\n'
+        + '        }\n'
+        + '        .loading::after {\n'
+        + '            font-family: "Helvetica Neue", Helvetica, sans-serif;\n'
+        + '            content: \'LOADING\';\n'
+        + '            text-align: center;\n'
+        + '            white-space: pre;\n'
+        + '            font-weight: normal;\n'
+        + '            font-size: 24px;\n'
+        + '            letter-spacing: 0.04rem;\n'
+        + '            color: #000;\n'
+        + '            opacity: 0.8;\n'
+        + '            animation: animation 1s alternate infinite;\n'
+        + '        }\n'
+        + '        @keyframes animation {\n'
+        + '            to { opacity: 0.2; }\n'
+        + '        }\n'
+        + '    </style>\n'
+        + '    <script type="text/javascript">\n'
+        + '        window.paceOptions = {\n'
+        + '            document: true,\n'
+        + '            eventLag: true,\n'
+        + '            restartOnPushState: true,\n'
+        + '            restartOnRequestAfter: true,\n'
+        + '            ajax: {\n'
+        + '                trackMethods: [ \'POST\',\'GET\']\n'
+        + '            }\n'
+        + '        };\n'
+        + '    </script>\n'
+        + '    <script src="/content/pace-progress/pace.js"></script>\n'
+        + '    <!-- end-pace-progress -->\n';
+        this.replaceContent(`${webappDir}index.html`, /[\n ]*<!-- begin-pace-progress[\s\S]*end-pace-progress -->/gm, '', false);
+        this.replaceContent(`${webappDir}index.html`, '</head>', `${indexHeaderContent}</head>`, false);
     },
 
     install() {
