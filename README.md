@@ -6,6 +6,8 @@
 
 This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
 
+![pace demo](https://user-images.githubusercontent.com/9164849/27725303-df6b97c8-5d9f-11e7-9303-6ff415178edf.gif)
+
 # Prerequisites
 
 As this is a [JHipster](http://jhipster.github.io/) module, we expect you have JHipster and its related tools already installed:
