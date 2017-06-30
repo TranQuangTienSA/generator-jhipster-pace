@@ -44,6 +44,12 @@ npm update -g generator-jhipster-pace
 
 # Usage
 
+Run the module on a JHipster generated application:
+
+```bash
+yo jhipster-pace
+```
+
 # License
 
 Apache-2.0 © [Tien Tran](https://github.com/tientq)
