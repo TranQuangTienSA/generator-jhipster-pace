@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-module": {
+    "promptValues": {
+      "githubName": "tientq",
+      "authorName": "Tien Tran",
+      "authorEmail": "tientq@outlook.com",
+      "authorUrl": "https://github.com/tientq"
+    }
+  }
+}
