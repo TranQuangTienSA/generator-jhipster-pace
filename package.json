@@ -4,7 +4,10 @@
   "description": "Pace progress bar and loading screen for Jhipster Angular 4",
   "keywords": [
     "yeoman-generator",
-    "jhipster-module"
+    "jhipster-module",
+    "pace",
+    "progress",
+    "loading"
   ],
   "homepage": "https://github.com/tientq/generator-jhipster-pace",
   "author": {
