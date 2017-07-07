@@ -119,8 +119,8 @@ module.exports = JhipsterGenerator.extend({
         this.angularAppName = this.getAngularAppName();
 
         // use constants from generator-constants.js
-        const javaDir = `${jhipsterConstants.SERVER_MAIN_SRC_DIR + this.packageFolder}/`;
-        const resourceDir = jhipsterConstants.SERVER_MAIN_RES_DIR;
+        // const javaDir = `${jhipsterConstants.SERVER_MAIN_SRC_DIR + this.packageFolder}/`;
+        // const resourceDir = jhipsterConstants.SERVER_MAIN_RES_DIR;
         const webappDir = jhipsterConstants.CLIENT_MAIN_SRC_DIR;
 
         // variable from questions
@@ -130,7 +130,7 @@ module.exports = JhipsterGenerator.extend({
 
         const webpackCopyContent = ',\n                { from: \'./node_modules/pace-progress\', to: \'content/pace-progress\' }';
         this.replaceContent('webpack/webpack.common.js', webpackCopyContent, '', false);
-        this.replaceContent('webpack/webpack.common.js', 'to: \'robots.txt\' }', `to: \'robots.txt\' }${webpackCopyContent}`, false);
+        this.replaceContent('webpack/webpack.common.js', 'to: \'robots.txt\' }', `to: 'robots.txt' }${webpackCopyContent}`, false);
 
         const indexLoadingContent = '<div class="loading"></div>';
         this.replaceContent(`${webappDir}index.html`, '<jhi-main>.*</jhi-main>', `<jhi-main>${indexLoadingContent}</jhi-main>`, true);
