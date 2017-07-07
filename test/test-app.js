@@ -2,7 +2,6 @@
 
 const path = require('path');
 const fse = require('fs-extra');
-const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
 const deps = [
@@ -21,17 +20,10 @@ describe('JHipster generator pace', () => {
                     testmode: true
                 })
                 .withPrompts({
-                    message: 'simple message to say hello'
+                    theme: 'green'
                 })
                 .withGenerators(deps)
                 .on('end', done);
-        });
-
-        it('generate dummy.txt file', () => {
-            assert.file([
-                'dummy-maven.txt',
-                'dummy-angular2.txt',
-            ]);
         });
     });
 
@@ -46,17 +38,10 @@ describe('JHipster generator pace', () => {
                     testmode: true
                 })
                 .withPrompts({
-                    message: 'simple message to say hello'
+                    theme: 'green'
                 })
                 .withGenerators(deps)
                 .on('end', done);
-        });
-
-        it('generate dummy.txt file', () => {
-            assert.file([
-                'dummy-gradle.txt',
-                'dummy-angular1.txt',
-            ]);
         });
     });
 });
