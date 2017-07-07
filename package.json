@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-pace",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Pace progress bar and loading screen for Jhipster Angular 4",
   "keywords": [
     "yeoman-generator",
