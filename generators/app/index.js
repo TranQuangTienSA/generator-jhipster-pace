@@ -126,7 +126,7 @@ module.exports = JhipsterGenerator.extend({
         // variable from questions
         this.theme = this.props.theme;
 
-        this.addNpmDependency('pace-progress', '1.0.2');
+        this.addNpmDevDependency('pace-progress', '1.0.2');
 
         const webpackCopyContent = ',\n                { from: \'./node_modules/pace-progress\', to: \'content/pace-progress\' }';
         this.replaceContent('webpack/webpack.common.js', webpackCopyContent, '', false);
